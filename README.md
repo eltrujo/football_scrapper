@@ -3,10 +3,12 @@
 Download and merge into one video the highlights of a match at Fit Five Brussels.
 
 **Usage**
-  1. Clone repository
-  2. ```pip install -r requirements.txt```
-  3. ```python scrap.py```
-  4. Fill in date, time and field number as requested by the program
+  1. Clone repository and access folder ```cd football_scrapper```
+  2. Create virtual environment ```conda create -n football_scrapper python=3.5```
+  3. Activate environment ```conda activate football_scrapper```
+  4. Install dependencies ```pip install -r requirements.txt```
+  5. Run program ```python scrap.py```
+  6. Fill in date, time and field number as requested by the program
 
 **Notes**
 When merging the videos, it's normal to have a warning like this:

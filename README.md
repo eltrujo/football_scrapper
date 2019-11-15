@@ -1,17 +1,24 @@
 # Football Scrapper
 
+**Description**  
 Download and merge into one video the highlights of a match at Fit Five Brussels.
 
+**Installation**
+  1. Install FFmpeg for [Windows](https://m.wikihow.com/Install-FFmpeg-on-Windows) or [Linux](https://linuxize.com/post/how-to-install-ffmpeg-on-ubuntu-18-04/). This will be used to compress the final output.
+  2. Clone repository and access root directory  
+  ```git clone https://github.com/eltrujo/football_scrapper.git```  
+  ```cd football_scrapper```
+  3. Create virtual environment and activate it  
+  ```conda create -n football_scrapper python=3.7```  
+  ```conda activate football_scrapper```
+  4. Install Python dependencies  
+  ```pip install -r requirements.txt```
+
 **Usage**
-  1. Clone repository and access project's root directory
-  2. Create virtual environment ```conda create -n football_scrapper python=3.5```
-  3. Activate environment ```conda activate football_scrapper```
-  4. Install dependencies ```pip install -r requirements.txt```
-  5. Run program ```python scrap.py```
-  6. Fill in date, time and field number as requested by the program
+  1. With the environment active, run ```python scrap.py```
+  2. Fill in date, time and field number as requested by the program.
 
-**Notes**
-
+**Notes**  
 When merging the videos, it's normal to have a warning like this:
 ```
 OpenCV: FFMPEG: tag 0x5634504d/'MP4V' is not supported with codec id 12 and format 'mp4 / MP4 (MPEG-4 Part 14)'

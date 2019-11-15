@@ -4,19 +4,12 @@
 Created on Thu Nov  7 16:09 2019
 
 @author: eltrujo
-
-Note:
-    When merging the videos, a warning like this is normal:
-        OpenCV: FFMPEG: tag 0x5634504d/'MP4V' is not supported with codec id 12 and format 'mp4 / MP4 (MPEG-4 Part 14)'
-        OpenCV: FFMPEG: fallback to use tag 0x7634706d/'mp4v'
-    But if it says:
-        Could not find encoder for codec id {}: Encoder not found
-    it will not create the merged video.
 """
 import os
 import requests
 import cv2
 from glob import glob
+import subprocess
 
 
 def create_directory(dir_path):
@@ -59,6 +52,7 @@ while not proceed:
 # Download highlights
 download = prompt_yes_no_question('Download highlights')
 if download:
+    print('Downloading highlights...')
     # Define url
     url = 'http://fitfive.inowys.com/VIDEO/'
 
@@ -94,6 +88,7 @@ if download:
 # Merge highlights
 merge = prompt_yes_no_question('Merge donwloaded videos')
 if merge:
+    print("Merging videos...")
     # Create directory if it doesn't exist
     merged_data_path = data_path + os.sep + 'merged'
     create_directory(merged_data_path)
@@ -106,13 +101,16 @@ if merge:
     i = 0
     cap = cv2.VideoCapture(videos[i])
     width, height = int(cap.get(3)), int(cap.get(4))
+    w_small = 640
+    h_small = int(float(height) * w_small / width)
+    print(f"Output video resolution: {w_small} x {h_small}")
     fps = cap.get(5)
     # fourcc = int(cap.get(6))
     fourcc = cv2.VideoWriter_fourcc(*'MP4V')
 
     # Start output video
     out_path = merged_data_path + os.sep + params['date'] + '.mp4'
-    out = cv2.VideoWriter(out_path, fourcc, fps, (width, height))
+    out = cv2.VideoWriter(out_path, fourcc, fps, (w_small, h_small))
     while True:
         # Read next frame
         _, frame = cap.read()
@@ -128,7 +126,10 @@ if merge:
 
             # Load next video and read first frame
             cap = cv2.VideoCapture(videos[i])
-            cap.read()
+            _, frame = cap.read()
+
+        # Reduce size
+        frame = cv2.resize(frame, (w_small, h_small))
 
         # Write frame to output video
         out.write(frame)
@@ -137,6 +138,20 @@ if merge:
     out.release()
     print(f"Merged video saved to: \n{out_path}")
 
+import pdb; pdb.set_trace()
+# Compress video
+compress = prompt_yes_no_question('Compress video')
+if compress:
+    print('Compressing video...')
+    # CRF (Constant Rate Factor) can range from 18 to 24
+    # CRF = 24 will compress the video to the smallest size
+    subprocess.call(f"ffmpeg -i \"{out_path}\" -vcodec libx264 -crf 24 \"{out_path.replace('.mp4', '_compr.mp4')}\"", shell=True)
+
+    # Delete uncompressed video
+    delete = prompt_yes_no_question('Delete uncompressed video')
+    if delete:
+        os.remove(out_path)
+    
 # Delete individual videos
 delete = prompt_yes_no_question('Delete individual video files')
 if delete:

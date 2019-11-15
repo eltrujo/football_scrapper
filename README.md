@@ -1,6 +1,7 @@
 # Football Scrapper
 
-**Description**  
+**Description**
+
 Download and merge into one video the highlights of a match at Fit Five Brussels.
 
 **Installation**
@@ -18,7 +19,8 @@ Download and merge into one video the highlights of a match at Fit Five Brussels
   1. With the environment active, run ```python scrap.py```
   2. Fill in date, time and field number as requested by the program.
 
-**Notes**  
+**Notes**
+
 When merging the videos, it's normal to have a warning like this:
 ```
 OpenCV: FFMPEG: tag 0x5634504d/'MP4V' is not supported with codec id 12 and format 'mp4 / MP4 (MPEG-4 Part 14)'

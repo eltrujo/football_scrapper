@@ -1,3 +1,4 @@
 requests==2.22.0
 opencv-python==4.1.1.26
+inputimeout==1.0.4
 

@@ -10,6 +10,8 @@ import requests
 import cv2
 from glob import glob
 import subprocess
+from inputimeout import inputimeout, TimeoutOccurred
+from time import time
 
 
 def create_directory(dir_path):
@@ -24,11 +26,14 @@ def save_video_from_bytes(bytes_str, video_path):
 
 def prompt_yes_no_question(question):
     while True:
-        proceed = input(f'{question} (y/n)? ')
-        if proceed == 'y' or proceed == '':
-            return True
-        elif proceed == 'n':
-            return False
+        try:
+            proceed = inputimeout(prompt=f"{question} (y/n)? ", timeout=5)
+            if proceed == 'y' or proceed == '':
+                return True
+            elif proceed == 'n':
+                return False
+        except TimeoutOccurred:
+            return 'y'
 
 
 # Create directory to save the videos if it doesn't exist
@@ -48,6 +53,9 @@ while not proceed:
     # Verify answer is correct or re-input parameters
     print(params)
     proceed = prompt_yes_no_question('Proceed')
+
+# Start counting time
+tic = time()
 
 # Download highlights
 download = prompt_yes_no_question('Download highlights')
@@ -138,7 +146,6 @@ if merge:
     out.release()
     print(f"Merged video saved to: \n{out_path}")
 
-import pdb; pdb.set_trace()
 # Compress video
 compress = prompt_yes_no_question('Compress video')
 if compress:
@@ -165,6 +172,9 @@ if delete:
     # Delete directory (only works if it's empty)
     os.rmdir(data_path + os.sep + params['date'])
 
+elapsed_t = time() - pic
+print('Finished')
+print(f"Total time elapsed: {elapsed_t // 60} minutes & {elapsed_t % 60} seconds")
 
 """
 Examples of links to download videos:

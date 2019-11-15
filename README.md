@@ -3,7 +3,7 @@
 Download and merge into one video the highlights of a match at Fit Five Brussels.
 
 **Usage**
-  1. Clone repository and access folder ```cd football_scrapper```
+  1. Clone repository and access project's root directory
   2. Create virtual environment ```conda create -n football_scrapper python=3.5```
   3. Activate environment ```conda activate football_scrapper```
   4. Install dependencies ```pip install -r requirements.txt```

@@ -172,7 +172,7 @@ if delete:
     # Delete directory (only works if it's empty)
     os.rmdir(data_path + os.sep + params['date'])
 
-elapsed_t = time() - pic
+elapsed_t = time() - tic
 print('Finished')
 print(f"Total time elapsed: {elapsed_t // 60} minutes & {elapsed_t % 60} seconds")
 

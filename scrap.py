@@ -174,7 +174,7 @@ if delete:
 
 elapsed_t = time() - tic
 print('Finished')
-print(f"Total time elapsed: {elapsed_t // 60} minutes & {elapsed_t % 60} seconds")
+print(f"Total time elapsed: {int(elapsed_t // 60)} minutes & {int(elapsed_t % 60)} seconds")
 
 """
 Examples of links to download videos:

@@ -68,9 +68,10 @@ if download:
     down_data_path = data_path + os.sep + params['date']
     create_directory(down_data_path)
 
-    # Array with all quarters of hour and the first quarter of the next hour
+    # Array with all quarters of hour where the match was played
     quarters = [params['time'] + mm for mm in ['00', '15', '30', '45']]
-    quarters += [str(int(params['time']) + 1) + '00']
+    quarters += [str(int(params['time']) + 1) + '00'] # add the first quarter of the second hour
+    # quarters += [str(int(params['time']) + 1) + '15'] # add the second quarter of the second hour
 
     # Loop through every quarter and downlowad its highlights
     video_counter = 0
